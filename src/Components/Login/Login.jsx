@@ -1,12 +1,22 @@
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
+import app from "../../Firebase/firebase.config";
 
 const Login = () => {
+    const auth = getAuth(app);
 
     const handleLogin = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then(result => {
+            console.log(result.user);
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
     }
     return (
         <div className="flex justify-center border-red border border-solid h-[90vh] items-center">
