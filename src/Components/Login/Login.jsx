@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
 import app from "../../Firebase/firebase.config";
 import { useRef, useState } from "react";
@@ -39,6 +39,14 @@ const Login = () => {
         }else if(!emailPattern.test(email)){
             setEmailError('Please write a valid email address');
         }
+
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            alert('Please Check Your Email');
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
     }
     return (
         <div className="flex justify-center border-red border border-solid h-[90vh] items-center">
