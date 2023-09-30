@@ -13,6 +13,8 @@ const Login = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        setRegistError('');
+        setSuccess('');
 
         signInWithEmailAndPassword(auth, email, password)
         .then(result => {
