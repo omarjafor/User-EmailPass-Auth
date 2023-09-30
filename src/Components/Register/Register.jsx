@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
 import app from "../../Firebase/firebase.config";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -36,6 +36,12 @@ const Register = () => {
         .then(result => {
             console.log(result.user);
             setSuccess('User Registration Successful')
+
+            sendEmailVerification(result.user)
+            .then(()=> {
+                alert('Please Check Your Email & Verify!')
+            })
+            .catch()
         })
         .catch(error => {
             console.error(error);
