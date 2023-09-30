@@ -1,9 +1,13 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
 import app from "../../Firebase/firebase.config";
+import { useState } from "react";
 
 const Login = () => {
     const auth = getAuth(app);
+
+    const [registError, setRegistError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleLogin = e => {
         e.preventDefault();
@@ -13,9 +17,11 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then(result => {
             console.log(result.user);
+            setSuccess('User Login Successful')
         })
         .catch(error => {
             console.log(error.message);
+            setRegistError(error.message);
         })
     }
     return (
@@ -92,6 +98,12 @@ const Login = () => {
                         >
                             Sign In
                         </button>
+                        {
+                            registError && <p className="text-red-600"> {registError} </p>
+                        }
+                        {
+                            success && <p className="text-green-600"> {success} </p>
+                        }
                         <p className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
                             Don&apos;t have an account?
                             <Link to='/register'
